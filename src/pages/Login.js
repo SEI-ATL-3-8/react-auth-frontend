@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
 import env from 'react-dotenv'
 
-const Login = (props) => {
+import { UserContext } from '../App'
+
+const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  
+  const [_user, setUser] = useContext(UserContext)
   
   return (
     <div>
@@ -13,7 +17,7 @@ const Login = (props) => {
         axios.post(`${env.BACKEND_URL}/users/login`, { email, password })
         .then((response) => {
           localStorage.setItem('userId', response.data.user.id)
-          props.setUser(response.data.user)
+          setUser(response.data.user)
         })
         .catch((error) => {
           console.log(error);

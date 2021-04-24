@@ -10,7 +10,7 @@ import Login from './pages/Login'
 import Profile from './pages/Profile'
 import './App.css';
 
-const UserContext = React.createContext({})
+const UserContext = React.createContext([{}, () => {}])
 
 function App() {
   const [user, setUser] = useState({})
@@ -28,9 +28,9 @@ function App() {
   useEffect(loadUser, [])
   
   return (
-    <UserContext.Provider value={setUser}>
+    <UserContext.Provider value={[user, setUser]}>
       <div>
-          <NavBar user={user} setUser={setUser} />
+          <NavBar />
           <Route path="/" exact render={() => {
             return <Home />
           }} />
@@ -38,14 +38,14 @@ function App() {
             if (user.id) {
               return <Redirect to="/profile" />
             } else {
-              return <Signup setUser={setUser} />
+              return <Signup />
             }
           }} />
           <Route path="/login" render={() => {
             if (user.id) {
               return <Redirect to="/profile" />
             } else {
-              return <Login setUser={setUser} />
+              return <Login />
             }
           }} />
           <Route path="/profile" render={() => {

@@ -4,11 +4,11 @@ import env from 'react-dotenv'
 
 import { UserContext } from '../App'
 
-const Signup = (props) => {
+const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const setUser = useContext(UserContext)
+  const [_user, setUser] = useContext(UserContext)
   
   return (
     <div>
@@ -17,8 +17,6 @@ const Signup = (props) => {
         axios.post(`${env.BACKEND_URL}/users`, { email, password })
         .then((response) => {
           localStorage.setItem('userId', response.data.user.id)
-          // props.setUser(response.data.user)
-          console.log(setUser);
           setUser(response.data.user)
         })
         .catch((error) => {

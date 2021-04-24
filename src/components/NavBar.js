@@ -1,15 +1,20 @@
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
-const NavBar = (props) => {
+import { UserContext } from '../App'
+
+const NavBar = () => {
+  const [user, setUser] = useContext(UserContext)
+  
   return (
     <div>
       <nav>
         <Link to="/">Home</Link>
-        {props.user.id ? 
+        {user.id ? 
           <span>
             <span onClick={() => {
               localStorage.removeItem('userId')
-              props.setUser({})
+              setUser({})
             }}>Logout</span>
             <Link to="/profile">Profile</Link>
           </span>
