@@ -1,5 +1,5 @@
 import { Route, Redirect } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import env from 'react-dotenv'
 
@@ -9,6 +9,8 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import './App.css';
+
+const UserContext = React.createContext({})
 
 function App() {
   const [user, setUser] = useState({})
@@ -26,34 +28,37 @@ function App() {
   useEffect(loadUser, [])
   
   return (
-    <div>
-        <NavBar user={user} setUser={setUser} />
-        <Route path="/" exact render={() => {
-          return <Home />
-        }} />
-        <Route path="/signup" render={() => {
-          if (user.id) {
-            return <Redirect to="/profile" />
-          } else {
-            return <Signup setUser={setUser} />
-          }
-        }} />
-        <Route path="/login" render={() => {
-          if (user.id) {
-            return <Redirect to="/profile" />
-          } else {
-            return <Login setUser={setUser} />
-          }
-        }} />
-        <Route path="/profile" render={() => {
-          if (user.id) {
-            return <Profile />
-          } else {
-            return <Redirect to="/login" />
-          }
-        }} />
-    </div>
+    <UserContext.Provider value={setUser}>
+      <div>
+          <NavBar user={user} setUser={setUser} />
+          <Route path="/" exact render={() => {
+            return <Home />
+          }} />
+          <Route path="/signup" render={() => {
+            if (user.id) {
+              return <Redirect to="/profile" />
+            } else {
+              return <Signup setUser={setUser} />
+            }
+          }} />
+          <Route path="/login" render={() => {
+            if (user.id) {
+              return <Redirect to="/profile" />
+            } else {
+              return <Login setUser={setUser} />
+            }
+          }} />
+          <Route path="/profile" render={() => {
+            if (user.id) {
+              return <Profile />
+            } else {
+              return <Redirect to="/login" />
+            }
+          }} />
+      </div>
+    </UserContext.Provider>
   );
 }
 
-export default App;
+export default App
+export { UserContext }
