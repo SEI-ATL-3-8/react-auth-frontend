@@ -1,6 +1,6 @@
-const Profile = () => {
+const Profile = (props) => {
   return (
-    <div>Profile</div>
+    <div>Hello, {props.user.email}!</div>
   )
 }
 

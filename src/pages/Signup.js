@@ -2,16 +2,21 @@ import { useState } from 'react'
 import axios from 'axios'
 import env from 'react-dotenv'
 
-const Signup = () => {
+const Signup = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  // const [emailError, setEmailError] = useState('')
 
   const submitForm = (e) => {
     e.preventDefault()
     axios.post(`${env.BACKEND_URL}/users`, { email, password })
     .then((response) => {
       localStorage.setItem('userId', response.data.user.id)
+      props.setUser(response.data.user)
     })
+    // .catch((error) => {
+    //   setEmailError(error.message)
+    // })
     // TODO: we want to show them the profile page
   }
   
