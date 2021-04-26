@@ -4,10 +4,12 @@ import axios from 'axios'
 import env from 'react-dotenv'
 
 import NavBar from './components/NavBar'
+import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
+
 import './App.css';
 
 const UserContext = React.createContext([{}, () => {}])
@@ -48,13 +50,21 @@ function App() {
               return <Login />
             }
           }} />
-          <Route path="/profile" render={() => {
+          <ProtectedRoute
+            path='/profile'
+            render={(_routingProps) => {
+              return <Profile />
+            }}
+            mustBeLoggedIn={true}
+          />
+          
+          {/* <Route path="/profile" render={() => {
             if (user.id) {
               return <Profile />
             } else {
               return <Redirect to="/login" />
             }
-          }} />
+          }} /> */}
       </div>
     </UserContext.Provider>
   );
