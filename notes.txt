@@ -1,0 +1,6 @@
+links we want:
+  - home
+  - create a user
+  - user info aka profile
+  - login
+  - logout
